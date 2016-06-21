@@ -6,12 +6,16 @@ const router = new Router();
 const middleware = require("./middleware");
 const routes = require("./routes");
 const barking = require("./barking");
+const parseBody = require("./parseBody");
+
+const doGeo = require("./geo")
 
 
 router.use(middleware.setFirst);
 router.use(middleware.setSecond);
 router.use(middleware.setBanana);
 router.use(doAuth);
+router.use(parseBody);
 
 
 router.setHandler("/", routes.doRoot);
@@ -21,6 +25,8 @@ router.setHandler("POST", "/api/echo", routes.postEcho);
 
 router.setHandler("POST", "/api/barks", barking);
 router.setHandler("GET", "/api/auth",  doOk);
+
+router.setHandler("POST", "/api/geocode", doGeo);
 
 function doOk (req, res) {
     console.log("do we even get here?")
@@ -70,5 +76,7 @@ server.on("request", function onReq (req, res) {
 server.on("error", function (err) {
     throw err;
 })
+
+server._router = router;
 
 module.exports = server;

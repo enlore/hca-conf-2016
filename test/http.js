@@ -10,7 +10,7 @@ describe("api speaks http", function () {
     it("responds to GET /api/not-found with 404", doNotFound);
     it("responds to GET /api/echo with JSON via Accept header", doJSON);
     it("responds to GET /api/echo with XML via Accept header", doXML);
-    it("responds to POST /api/echo with JSON, data from POST body", doPostJSON);
+    it("responds to POST /api/barks with JSON, data from POST body", doPostJSON);
     it("responds to POST /api/echo with XML, data from POST body");
     it("responds to POST without JSON with 400", do400onPOST);
     it("responds to /api/auth with 401 for bad credentials", do401);
