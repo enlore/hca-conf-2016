@@ -45,7 +45,7 @@ function doNotFound (done) {
 }
 
 function doJSON (done) {
-    api.get("/api/echo")
+    api.post("/api/echo")
     .set("Accept", "application/json")
     .expect(200)
     .expect("Content-Type", /json/)

@@ -4,18 +4,31 @@ const url = require("url");
 
 class Router {
     constructor () {
-        this.routes = {};
+        this.routes = {
+            GET: {},
+            POST: {},
+            PUT: {},
+            DELETE: {}
+        };
         this.middlewares = [];
     }
 
-    setHandler (route, cb) {
-        this.routes[route] = cb;
+    setHandler (method, route, cb) {
+        if (typeof route === "function") {
+            cb = route;
+            route = method;
+            method = "GET";
+        }
+
+        this.routes[method][route] = cb;
     }
 
     handle (req, res) {
         let urlInfo = url.parse(req.url, true);
+        let pathname = urlInfo.pathname;
+        let method = req.method;
 
-        let route = this.routes[urlInfo.pathname];
+        let route = this.routes[method][pathname];
 
         // pass along query params
         req.query = urlInfo.query;

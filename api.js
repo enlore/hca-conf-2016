@@ -30,7 +30,7 @@ router.setHandler("/api/hello", function doHello (req, res) {
     res.end(`Hi ${name}`);
 })
 
-router.setHandler("/api/echo", function doEcho (req, res) {
+router.setHandler("GET", "/api/echo", function doEcho (req, res) {
     let accept = req.headers.accept || "text/plain";
 
     if (/json/.test(accept))
