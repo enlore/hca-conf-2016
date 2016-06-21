@@ -2,18 +2,24 @@
 
 const http = require("http");
 const Router = require("./router");
+const router = new Router();
+
+router.setHandler("/", function doRoot (req, res) {
+    res.end();
+});
+
+router.setHandler("/api/hello", function doHello (req, res) {
+    res.end("Hi bob");
+})
 
 const server = http.createServer();
 
-server.on("request", onRequest)
+server.on("request", function onReq (req, res) {
+    router.handle(req, res);
+})
 
-function onRequest (request, response) {
-    if (request.url === "/api/not-found")
-        response.statusCode = 404;
-    else
-        response.statusCode = 200;
-
-    response.end();
-}
+server.on("error", function (err) {
+    throw err;
+})
 
 module.exports = server;

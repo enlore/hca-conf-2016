@@ -1,5 +1,7 @@
 "use strict";
 
+const url = require("url");
+
 class Router {
     constructor () {
         this.routes = {};
@@ -9,8 +11,10 @@ class Router {
         this.routes[route] = cb;
     }
 
-    handle (route) {
-        this.routes[route]();
+    handle (req, res) {
+        let urlInfo = url.parse(req.url, true);
+
+        this.routes[urlInfo.pathname](req, res);
     }
 }
 
