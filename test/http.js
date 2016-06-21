@@ -13,6 +13,7 @@ describe("api speaks http", function () {
     it("responds to POST /api/echo with JSON, data from POST body", doPostJSON);
     it("responds to POST /api/echo with XML, data from POST body");
     it("resonds to POST without JSON with 400", do400onPOST);
+    it("resonse to /api/auth with 401 for bad credentials", do401);
 })
 
 describe("api shows evidence of middleware", function () {
@@ -141,4 +142,11 @@ function do400onPOST (done) {
         res.res.statusMessage.should.match(/only accepts JSON/);
     })
     .end(done)
+}
+
+function do401 (done) {
+    api.get("/api/auth")
+    .auth("nobody", "not a password")
+    .expect(401)
+    .end(done);
 }
