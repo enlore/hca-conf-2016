@@ -36,7 +36,8 @@ function doOk (req, res) {
 
 function doAuth (req, res, next) {
     let routes = [
-        '/api/auth'
+        '/api/auth',
+        '/api/geocode'
     ];
 
     // if it's on the list, it needs auth
