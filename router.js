@@ -14,7 +14,15 @@ class Router {
     handle (req, res) {
         let urlInfo = url.parse(req.url, true);
 
-        this.routes[urlInfo.pathname](req, res);
+        let route = this.routes[urlInfo.pathname];
+
+        if (route !== void 0) {
+            route(req, res);
+
+        } else if (route === void 0) {
+            res.writeHead(404);
+            res.end();
+        }
     }
 }
 
