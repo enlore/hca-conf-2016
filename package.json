@@ -1,0 +1,25 @@
+{
+  "name": "geocode-api",
+  "version": "1.0.0",
+  "description": "## What do I do with this?",
+  "main": "api.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "should": "^9.0.2",
+    "sinon": "^1.17.4",
+    "supertest": "^1.2.0",
+    "colors": "^1.1.2",
+    "express": "^4.14.0"
+  },
+  "devDependencies": {
+    "mocha": "^2.5.3"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
