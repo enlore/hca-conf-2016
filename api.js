@@ -3,4 +3,6 @@
 const http = require("http");
 const Router = require("./router");
 
-module.exports = {};
+const server = http.createServer();
+
+module.exports = server;
