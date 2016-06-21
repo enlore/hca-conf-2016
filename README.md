@@ -14,10 +14,10 @@
 
 * Install [NodeJS](https://nodejs.org/en/)
 * Run `npm install -g mocha` at your command line (this command requires admin
-  privilegeas)
+  privileges)
 * Clone this repo
 * `cd` into the folder of this repo
 * run `npm install` from within the folder of this repo
 * run `mocha -w` from within the folder of this repo and watch the tests pass
-* follow along with my as I break tests and fiddle with things
+* follow along with me as I break tests and fiddle with things
 * fiddle with things yourself
