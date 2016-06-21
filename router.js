@@ -16,6 +16,9 @@ class Router {
 
         let route = this.routes[urlInfo.pathname];
 
+        // pass along query params
+        req.query = urlInfo.query;
+
         if (route !== void 0) {
             route(req, res);
 

@@ -9,7 +9,8 @@ router.setHandler("/", function doRoot (req, res) {
 });
 
 router.setHandler("/api/hello", function doHello (req, res) {
-    res.end("Hi bob");
+    let name = req.query.name || "bob";
+    res.end(`Hi ${name}`);
 })
 
 const server = http.createServer();
