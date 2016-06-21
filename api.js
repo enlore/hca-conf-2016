@@ -4,6 +4,11 @@ const http = require("http");
 const Router = require("./router");
 const router = new Router();
 
+router.use(function setBanana (req, res, next) {
+    res.setHeader("x-bananas", "this is");
+    next();
+})
+
 router.setHandler("/", function doRoot (req, res) {
     res.end();
 });
