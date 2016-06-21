@@ -1,4 +1,5 @@
 "use strict";
+const should = require("should");
 
 const api = require("./api");
 
@@ -9,7 +10,7 @@ describe("api speaks http", function () {
     it("responds to GET /api/not-found with 404", doNotFound);
     it("responds to GET /api/echo with JSON via Accept header", doJSON);
     it("responds to GET /api/echo with XML via Accept header", doXML);
-    it("responds to POST /api/echo with JSON, data from POST body");
+    it("responds to POST /api/echo with JSON, data from POST body", doPostJSON);
     it("responds to POST /api/echo with XML, data from POST body");
 })
 
@@ -114,4 +115,17 @@ function doOrder (done) {
         first.should.be.lessThan(second);
     })
     .end(done)
+}
+
+function doPostJSON (done) {
+    api.post("/api/barks")
+    .set("Accept", "application/json")
+    .set("Content-Type", "application/json")
+    .send({count: 3, noise: "BARK", sep: " "})
+    .expect(200)
+    .expect(function onPostJSON (res) {
+        should.exists(res.body.result, "Expected a response body")
+        res.body.result.should.eql("BARK BARK BARK")
+    })
+    .end(done);
 }
