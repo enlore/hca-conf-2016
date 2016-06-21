@@ -8,7 +8,11 @@ const server = http.createServer();
 server.on("request", onRequest)
 
 function onRequest (request, response) {
-    response.statusCode = 200;
+    if (request.url === "/api/not-found")
+        response.statusCode = 404;
+    else
+        response.statusCode = 200;
+
     response.end();
 }
 
