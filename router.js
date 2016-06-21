@@ -32,6 +32,7 @@ class Router {
 
         // pass along query params
         req.query = urlInfo.query;
+        req.pathname = pathname;
 
         if (route === void 0) {
             res.writeHead(404);

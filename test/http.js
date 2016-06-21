@@ -7,8 +7,10 @@ describe("api speaks http", function () {
     it("responds to GET /api/hello with name", doHello);
     it("responds to GET /api/hello with name passed as query param", doHelloJenny);
     it("responds to GET /api/not-found with 404", doNotFound);
-    it("responds to POST /api/echo with JSON via Accept header", doJSON);
-    it("responds to POST /api/echo with XML via Accept header", doXML);
+    it("responds to GET /api/echo with JSON via Accept header", doJSON);
+    it("responds to GET /api/echo with XML via Accept header", doXML);
+    it("responds to POST /api/echo with JSON, data from POST body");
+    it("responds to POST /api/echo with XML, data from POST body");
 })
 
 describe("api shows evidence of middleware", function () {
@@ -45,18 +47,27 @@ function doNotFound (done) {
 }
 
 function doJSON (done) {
-    api.post("/api/echo")
+    api.get("/api/echo")
     .set("Accept", "application/json")
     .expect(200)
     .expect("Content-Type", /json/)
+    .expect(function onJSON (res) {
+        res.text.should.be.a.String();
+        res.body.route.should.eql("/api/echo");
+        res.body.message.should.eql("Here's some JSON");
+    })
     .end(done);
 }
 
 function doXML (done) {
-    api.post("/api/echo")
+    api.get("/api/echo")
     .set("Accept", "text/xml")
     .expect(200)
     .expect("Content-Type", /xml/)
+    .expect(function onXML (res) {
+        res.text.should.match(/id="message"/);
+        res.text.should.match(/id="route"/);
+    })
     .end(done);
 }
 
