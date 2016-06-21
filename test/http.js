@@ -12,6 +12,7 @@ describe("api speaks http", function () {
     it("responds to GET /api/echo with XML via Accept header", doXML);
     it("responds to POST /api/echo with JSON, data from POST body", doPostJSON);
     it("responds to POST /api/echo with XML, data from POST body");
+    it("resonds to POST without JSON with 400", do400onPOST);
 })
 
 describe("api shows evidence of middleware", function () {
@@ -128,4 +129,16 @@ function doPostJSON (done) {
         res.body.result.should.eql("BARK BARK BARK")
     })
     .end(done);
+}
+
+function do400onPOST (done) {
+    api.post("/api/barks")
+    .set("Accept", "application/json")
+    .set("Content-Type", "text/xml")
+    .send(`<node id="noise">quack</node>`)
+    .expect(400)
+    .expect(function (res) {
+        res.res.statusMessage.should.match(/only accepts JSON/);
+    })
+    .end(done)
 }
