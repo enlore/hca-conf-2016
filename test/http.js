@@ -53,7 +53,7 @@ function doJSON (done) {
 }
 
 function doXML (done) {
-    api.get("/api/echo")
+    api.post("/api/echo")
     .set("Accept", "text/xml")
     .expect(200)
     .expect("Content-Type", /xml/)
