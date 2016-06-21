@@ -13,6 +13,21 @@ router.setHandler("/api/hello", function doHello (req, res) {
     res.end(`Hi ${name}`);
 })
 
+router.setHandler("/api/echo", function doEcho (req, res) {
+    let accept = req.headers.accept || "text/plain";
+
+    if (/json/.test(accept))
+        res.setHeader("Content-Type", "application/json");
+
+    else if (/xml/.test(accept))
+        res.setHeader("Content-Type", "text/xml");
+
+    else
+        res.setHeader("Content-Type", "text/plain");
+
+    res.end();
+})
+
 const server = http.createServer();
 
 server.on("request", function onReq (req, res) {
