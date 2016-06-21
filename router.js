@@ -20,8 +20,11 @@ class Router {
         // pass along query params
         req.query = urlInfo.query;
 
-        // if we have middlewares, use em
-        if (this.middlewares.length > 0) {
+        if (route === void 0) {
+            res.writeHead(404);
+            return res.end();
+
+        } else if (this.middlewares.length > 0) {
             let mws = this.middlewares;
 
             let _i = 0;
@@ -31,19 +34,19 @@ class Router {
             // this is tricky. we have to allow for async middleware, but the
             // middleware must also process in order
             function next () {
-                _i++;
-
-                if (mws[_i] !== void 0)
+                if (++_i < mws.length)
                     mws[_i](req, res, next);
+                else
+                    return final(req, res);
             }
-        }
 
-        if (route !== void 0) {
-            route(req, res);
+            function final (req, res) {
+                route(req, res);
+            }
 
-        } else if (route === void 0) {
-            res.writeHead(404);
-            res.end();
+        } else {
+            return route(req, res);
+
         }
     }
 

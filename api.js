@@ -4,6 +4,18 @@ const http = require("http");
 const Router = require("./router");
 const router = new Router();
 
+router.use(function setFirst (req, res, next) {
+    res.setHeader("x-first", Date.now());
+    next();
+})
+
+router.use(function setSecond (req, res, next) {
+    setTimeout(() => {
+        res.setHeader("x-second", Date.now());
+        next();
+    }, 200);
+})
+
 router.use(function setBanana (req, res, next) {
     res.setHeader("x-bananas", "this is");
     next();

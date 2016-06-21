@@ -13,6 +13,7 @@ describe("api speaks http", function () {
 
 describe("api shows evidence of middleware", function () {
     it("exhibits custom header on all requests", doCustomHeader);
+    it("processes middleware in order, shown via middleware with timestamps", doOrder)
 })
 
 function doGet (done) {
@@ -87,4 +88,18 @@ function doCustomHeader (done) {
         else if (cbCount === cbLimit)
             done();
     }
+}
+
+function doOrder (done) {
+    api.get("/api/echo")
+    .expect(200)
+    .expect(res => {
+        res.headers["x-first"].should.not.be.undefined();
+        res.headers["x-second"].should.not.be.undefined();
+        let first = parseInt(res.headers["x-first"]);
+        let second = parseInt(res.headers["x-second"]);
+
+        first.should.be.lessThan(second);
+    })
+    .end(done)
 }
