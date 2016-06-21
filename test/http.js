@@ -96,6 +96,7 @@ function doOrder (done) {
     .expect(res => {
         res.headers["x-first"].should.not.be.undefined();
         res.headers["x-second"].should.not.be.undefined();
+
         let first = parseInt(res.headers["x-first"]);
         let second = parseInt(res.headers["x-second"]);
 
