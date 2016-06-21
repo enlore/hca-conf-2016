@@ -12,8 +12,8 @@ describe("api speaks http", function () {
     it("responds to GET /api/echo with XML via Accept header", doXML);
     it("responds to POST /api/echo with JSON, data from POST body", doPostJSON);
     it("responds to POST /api/echo with XML, data from POST body");
-    it("resonds to POST without JSON with 400", do400onPOST);
-    it("resonse to /api/auth with 401 for bad credentials", do401);
+    it("responds to POST without JSON with 400", do400onPOST);
+    it("responds to /api/auth with 401 for bad credentials", do401);
 })
 
 describe("api shows evidence of middleware", function () {
